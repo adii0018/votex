@@ -1,7 +1,29 @@
-import { useState } from 'react';
-import useSWR from 'swr';
-import { fetchGlossary } from '../api';
+import { useState, useMemo } from 'react';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
+
+// Dummy glossary data
+const DUMMY_GLOSSARY = [
+  { id: 1, term: 'EVM', definition: 'Electronic Voting Machine used for recording votes in Indian elections. It consists of a Control Unit and a Balloting Unit.', category: 'Technology', example: 'Voters press the button next to their chosen candidate on the EVM.' },
+  { id: 2, term: 'VVPAT', definition: 'Voter Verified Paper Audit Trail - a device that allows voters to verify that their vote was cast correctly by printing a paper slip.', category: 'Technology', example: 'After voting, the VVPAT displays your choice for 7 seconds before storing it securely.' },
+  { id: 3, term: 'Constituency', definition: 'A geographical area represented by an elected member in the legislature. India has 543 Lok Sabha constituencies.', category: 'Structure', example: 'Mumbai has 6 Lok Sabha constituencies including Mumbai North and Mumbai South.' },
+  { id: 4, term: 'NOTA', definition: 'None of the Above - an option that allows voters to reject all candidates in an election.', category: 'Process', example: 'If you don\'t support any candidate, you can choose NOTA on the EVM.' },
+  { id: 5, term: 'Model Code of Conduct', definition: 'Guidelines issued by the Election Commission to regulate political parties and candidates during elections.', category: 'Regulations', example: 'During MCC, the government cannot announce new schemes or make policy decisions.' },
+  { id: 6, term: 'Returning Officer', definition: 'An official responsible for conducting elections in a constituency, including accepting nominations and declaring results.', category: 'Officials', example: 'The Returning Officer verifies all nomination papers submitted by candidates.' },
+  { id: 7, term: 'Voter ID (EPIC)', definition: 'Electors Photo Identity Card issued by the Election Commission to all eligible voters.', category: 'Documents', example: 'Carry your Voter ID card to the polling booth on election day.' },
+  { id: 8, term: 'Polling Booth', definition: 'A designated location where voters cast their votes on election day.', category: 'Structure', example: 'Your polling booth address is mentioned on your Voter ID card.' },
+  { id: 9, term: 'First Past the Post', definition: 'Electoral system where the candidate with the most votes wins, regardless of whether they have a majority.', category: 'System', example: 'In FPTP, a candidate can win with 35% votes if other candidates get less.' },
+  { id: 10, term: 'Affidavit', definition: 'A sworn statement filed by candidates disclosing their assets, liabilities, and criminal records.', category: 'Documents', example: 'All candidates must submit an affidavit with their nomination papers.' },
+  { id: 11, term: 'Security Deposit', definition: 'Money deposited by candidates while filing nominations, forfeited if they get less than 1/6th of valid votes.', category: 'Process', example: 'Lok Sabha candidates must deposit ₹25,000 as security deposit.' },
+  { id: 12, term: 'Exit Poll', definition: 'Survey conducted after voting to predict election results based on voter responses.', category: 'Campaigns', example: 'Exit polls are broadcast after the last phase of voting ends.' },
+  { id: 13, term: 'Hung Assembly', definition: 'Situation where no single party or coalition has a clear majority to form government.', category: 'Results', example: 'In a hung assembly, parties negotiate to form a coalition government.' },
+  { id: 14, term: 'By-Election', definition: 'Election held to fill a vacancy that arises between general elections.', category: 'Process', example: 'A by-election is conducted when an MP resigns or passes away.' },
+  { id: 15, term: 'Manifesto', definition: 'A public declaration of policies and promises made by a political party before elections.', category: 'Campaigns', example: 'Parties release their manifestos outlining their vision and promises.' },
+  { id: 16, term: 'Booth Capturing', definition: 'Illegal practice of taking control of a polling booth to cast fraudulent votes.', category: 'Legal', example: 'Booth capturing is a serious electoral offense punishable by law.' },
+  { id: 17, term: 'Postal Ballot', definition: 'Voting method for those unable to vote in person, such as armed forces personnel and senior citizens.', category: 'Process', example: 'Senior citizens above 85 can apply for postal ballot facility.' },
+  { id: 18, term: 'Delimitation', definition: 'Process of redrawing constituency boundaries based on population changes.', category: 'Structure', example: 'Delimitation ensures equal representation based on population distribution.' },
+  { id: 19, term: 'Chief Election Commissioner', definition: 'Constitutional head of the Election Commission of India responsible for conducting free and fair elections.', category: 'Officials', example: 'The CEC announces election schedules and enforces the Model Code of Conduct.' },
+  { id: 20, term: 'Voter Turnout', definition: 'Percentage of eligible voters who actually cast their votes in an election.', category: 'Results', example: 'India achieved a 67% voter turnout in the 2019 Lok Sabha elections.' }
+];
 
 const categoryColors = {
   'Technology': '#4F46E5',
@@ -78,15 +100,29 @@ export default function GlossaryPage() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const { data, isLoading, error } = useSWR(
-    ['glossary', search],
-    () => fetchGlossary(search),
-    { revalidateOnFocus: false, debounce: 300 }
-  );
+  // Filter terms based on search and category
+  const filteredTerms = useMemo(() => {
+    let result = DUMMY_GLOSSARY;
+    
+    // Filter by search
+    if (search) {
+      const searchLower = search.toLowerCase();
+      result = result.filter(term => 
+        term.term.toLowerCase().includes(searchLower) || 
+        term.definition.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    // Filter by category
+    if (activeCategory !== 'All') {
+      result = result.filter(term => term.category === activeCategory);
+    }
+    
+    return result;
+  }, [search, activeCategory]);
 
-  const terms = data?.results || [];
-  const categories = ['All', ...new Set(terms.map(t => t.category).filter(Boolean))];
-  const filtered = activeCategory === 'All' ? terms : terms.filter(t => t.category === activeCategory);
+  const categories = ['All', ...new Set(DUMMY_GLOSSARY.map(t => t.category).filter(Boolean))];
+  const filtered = filteredTerms;
 
   return (
     <main style={{ paddingTop: '5rem' }}>
@@ -148,24 +184,14 @@ export default function GlossaryPage() {
         </div>
 
         {/* Results Count */}
-        {!isLoading && (
-          <p className="text-sm mb-6" style={{ color: '#64748b' }}>
-            {filtered.length} term{filtered.length !== 1 ? 's' : ''} found
-            {search && ` for "${search}"`}
-            {activeCategory !== 'All' && ` in ${activeCategory}`}
-          </p>
-        )}
+        <p className="text-sm mb-6" style={{ color: '#64748b' }}>
+          {filtered.length} term{filtered.length !== 1 ? 's' : ''} found
+          {search && ` for "${search}"`}
+          {activeCategory !== 'All' && ` in ${activeCategory}`}
+        </p>
 
         {/* Terms Grid */}
-        {isLoading ? (
-          <div className="grid md:grid-cols-2 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} style={{ height: '120px', background: 'rgba(255,255,255,0.04)', borderRadius: '12px' }} />
-            ))}
-          </div>
-        ) : error ? (
-          <p style={{ color: '#f43f5e' }}>Failed to load glossary. Please try again.</p>
-        ) : filtered.length === 0 ? (
+        {filtered.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-2xl mb-3" aria-hidden="true">🔍</p>
             <p className="font-display text-xl text-white mb-2">No terms found</p>

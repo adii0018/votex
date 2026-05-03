@@ -1,246 +1,237 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, PlayCircle, Shield, BookOpen, CheckCircle, Zap, Award } from 'lucide-react';
-import useSWR from 'swr';
-import { fetchDates } from '../api';
-import ShapeGrid from '../components/ShapeGrid';
-import GlitchText from '../components/GlitchText';
+import { ArrowRight, Sparkles, Shield, BookOpen, Award, Zap, Calendar, CheckCircle2, TrendingUp, Users } from 'lucide-react';
+import './LandingPage.css';
+
+// Dummy upcoming dates
+const DUMMY_DATES = [
+  {
+    id: 1,
+    event_name: 'Voter Registration Deadline',
+    date: '2026-06-15',
+    description: 'Last date to register as a new voter or update your details in the electoral roll.',
+    days_until: 43
+  },
+  {
+    id: 2,
+    event_name: 'Nomination Filing Begins',
+    date: '2026-07-01',
+    description: 'Candidates can start filing their nomination papers with the Returning Officer.',
+    days_until: 59
+  },
+  {
+    id: 3,
+    event_name: 'First Phase Polling',
+    date: '2026-08-10',
+    description: 'First phase of voting begins across designated constituencies.',
+    days_until: 99
+  }
+];
+
+// Animated Rays Background Component
+function AnimatedRays() {
+  return (
+    <div className="rays-container">
+      <div className="ray ray-1"></div>
+      <div className="ray ray-2"></div>
+      <div className="ray ray-3"></div>
+      <div className="ray ray-4"></div>
+      <div className="ray ray-5"></div>
+      <div className="ray ray-6"></div>
+      <div className="ray ray-7"></div>
+      <div className="ray ray-8"></div>
+    </div>
+  );
+}
+
+// Floating Particles
+function FloatingParticles() {
+  const particles = Array.from({ length: 30 }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 5,
+    duration: 3 + Math.random() * 4,
+    size: 2 + Math.random() * 3,
+  }));
+
+  return (
+    <div className="particles-container">
+      {particles.map(p => (
+        <div
+          key={p.id}
+          className="floating-particle"
+          style={{
+            left: `${p.left}%`,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 const features = [
   {
-    icon: <BookOpen size={22} />,
-    title: 'Step-by-Step Guide',
-    description: 'Navigate every stage of the voting process with clear, actionable instructions.',
+    icon: <BookOpen size={28} strokeWidth={1.5} />,
+    title: 'Complete Voting Guide',
+    description: 'Step-by-step walkthrough from registration to casting your vote with confidence.',
     link: '/guide',
-    color: '#4F46E5',
+    gradient: 'from-blue-500 to-cyan-500',
   },
   {
-    icon: <Zap size={22} />,
+    icon: <Calendar size={28} strokeWidth={1.5} />,
     title: 'Interactive Timeline',
-    description: 'Explore the complete election cycle from announcement to oath-taking.',
+    description: 'Visualize the entire election journey with our dynamic timeline interface.',
     link: '/timeline',
-    color: '#F59E0B',
+    gradient: 'from-purple-500 to-pink-500',
   },
   {
-    icon: <Award size={22} />,
+    icon: <Award size={28} strokeWidth={1.5} />,
     title: 'Knowledge Quiz',
-    description: 'Test your election knowledge and earn your "Election Ready" badge.',
+    description: 'Test your election knowledge and earn achievement badges along the way.',
     link: '/quiz',
-    color: '#10b981',
+    gradient: 'from-amber-500 to-orange-500',
   },
   {
-    icon: <Shield size={22} />,
+    icon: <Shield size={28} strokeWidth={1.5} />,
     title: 'Eligibility Checker',
-    description: 'Find out instantly if you qualify to vote and what steps to take next.',
+    description: 'Instantly verify if you can vote and get personalized guidance.',
     link: '/check',
-    color: '#f43f5e',
+    gradient: 'from-emerald-500 to-teal-500',
   },
   {
-    icon: <BookOpen size={22} />,
+    icon: <Sparkles size={28} strokeWidth={1.5} />,
     title: 'Election Glossary',
-    description: 'Decode election jargon — from EVM to Constituency, explained simply.',
+    description: 'Understand complex election terms explained in simple language.',
     link: '/glossary',
-    color: '#8b5cf6',
+    gradient: 'from-rose-500 to-red-500',
   },
   {
-    icon: <CheckCircle size={22} />,
+    icon: <Zap size={28} strokeWidth={1.5} />,
     title: 'AI Assistant',
-    description: 'Get instant answers to any election question from our smart assistant.',
+    description: 'Get instant answers powered by artificial intelligence.',
     link: '/',
-    color: '#06b6d4',
+    gradient: 'from-indigo-500 to-violet-500',
   },
 ];
 
 const stats = [
-  { value: '900M+', label: 'Eligible Voters in India' },
-  { value: '543', label: 'Lok Sabha Constituencies' },
-  { value: '18', label: 'Minimum Voting Age' },
-  { value: '1950', label: 'Voter Helpline Number' },
+  { icon: <Users size={24} />, value: '900M+', label: 'Eligible Voters' },
+  { icon: <TrendingUp size={24} />, value: '543', label: 'Constituencies' },
+  { icon: <CheckCircle2 size={24} />, value: '18+', label: 'Voting Age' },
+  { icon: <Shield size={24} />, value: '1950', label: 'Helpline' },
 ];
 
 export default function LandingPage() {
-  const { data: datesData } = useSWR('dates', fetchDates, { revalidateOnFocus: false });
-  const upcomingDates = datesData?.results?.slice(0, 3) || [];
-  const [heroVisible, setHeroVisible] = useState(false);
+  const upcomingDates = DUMMY_DATES;
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setHeroVisible(true), 100);
-    return () => clearTimeout(t);
+    setIsVisible(true);
   }, []);
 
   return (
-    <main>
-      {/* ─── Hero Section ─── */}
-      <section
-        aria-label="Hero"
-        style={{
-          position: 'relative',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          background: 'linear-gradient(180deg, #0A1628 0%, #0f2040 100%)',
-          paddingTop: '5rem',
-          paddingBottom: '8rem',
-          overflow: 'hidden',
-        }}
-      >
-        {/* ShapeGrid Background */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            opacity: 0.15,
-            pointerEvents: 'none',
-          }}
-        >
-          <ShapeGrid
-            speed={0.69}
-            squareSize={40}
-            direction="diagonal"
-            borderColor="#2F293A"
-            hoverFillColor="#222"
-            shape="hexagon"
-            hoverTrailAmount={0}
-            hoverColor="#10B981"
-          />
-        </div>
+    <main className="landing-page">
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* HERO SECTION WITH RAYS */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <section className="hero-section">
+        <AnimatedRays />
+        <FloatingParticles />
+        
+        {/* Gradient Overlay */}
+        <div className="hero-gradient-overlay" />
 
-        <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
-            {/* Tag */}
-            <div
-              className="section-tag"
-              style={{
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
-                transition: 'all 0.6s ease',
-                justifyContent: 'center',
-                margin: '0 auto 1rem',
-              }}
-            >
-              <span>🗳️</span>
-              India's #1 Election Education Platform
+        <div className="container-xl hero-content">
+          <div className={`hero-inner ${isVisible ? 'visible' : ''}`}>
+            {/* Badge */}
+            <div className="hero-badge">
+              <Sparkles size={16} />
+              <span>India's Most Advanced Election Platform</span>
             </div>
 
-            {/* Heading with Glitch Effect */}
-            <div
-              style={{
-                marginBottom: '1.5rem',
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: 'all 0.7s ease 0.1s',
-              }}
-            >
-              <GlitchText 
-                speed={1.2} 
-                enableShadows={true} 
-                enableOnHover={false}
-                className="hero-glitch"
-              >
-                Your Vote, Your Voice
-              </GlitchText>
-            </div>
+            {/* Main Heading */}
+            <h1 className="hero-title">
+              <span className="hero-title-line">Empower Your</span>
+              <span className="hero-title-highlight">Democratic Voice</span>
+            </h1>
 
-            {/* Subheading */}
-            <p
-              style={{
-                fontSize: '1.15rem',
-                color: '#94a3b8',
-                lineHeight: 1.7,
-                marginBottom: '2.5rem',
-                maxWidth: '560px',
-                margin: '0 auto 2.5rem',
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: 'all 0.7s ease 0.2s',
-              }}
-            >
-              Master the election process from registration to results. Interactive tools, expert guidance, and everything you need to vote with confidence.
+            {/* Subtitle */}
+            <p className="hero-subtitle">
+              Navigate the complete election journey with confidence. From voter registration 
+              to understanding results — we've got you covered with interactive tools and expert guidance.
             </p>
 
-            {/* CTAs */}
-            <div
-              className="flex flex-wrap gap-4"
-              style={{
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: 'all 0.7s ease 0.3s',
-                justifyContent: 'center',
-              }}
-            >
-              <Link to="/guide" className="btn-primary text-base">
-                Start the Guide
-                <ArrowRight size={18} aria-hidden="true" />
+            {/* CTA Buttons */}
+            <div className="hero-cta-group">
+              <Link to="/guide" className="cta-primary">
+                <span>Get Started</span>
+                <ArrowRight size={20} />
               </Link>
-              <Link to="/quiz" className="btn-outline text-base">
-                <PlayCircle size={18} aria-hidden="true" />
-                Take the Quiz
+              <Link to="/quiz" className="cta-secondary">
+                <Sparkles size={20} />
+                <span>Take Quiz</span>
               </Link>
             </div>
 
-            {/* Stats Row */}
-            <div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
-              style={{
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: 'all 0.7s ease 0.5s',
-                maxWidth: '800px',
-                margin: '4rem auto 0',
-              }}
-            >
-              {stats.map(stat => (
-                <div key={stat.label}>
-                  <div className="font-display text-2xl font-bold" style={{ color: '#F59E0B' }}>
-                    {stat.value}
-                  </div>
-                  <div className="text-xs mt-1" style={{ color: '#64748b', lineHeight: 1.4 }}>
-                    {stat.label}
+            {/* Stats Bar */}
+            <div className="stats-bar">
+              {stats.map((stat, i) => (
+                <div key={i} className="stat-item">
+                  <div className="stat-icon">{stat.icon}</div>
+                  <div className="stat-content">
+                    <div className="stat-value">{stat.value}</div>
+                    <div className="stat-label">{stat.label}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+        {/* Bottom Fade */}
+        <div className="hero-bottom-fade" />
       </section>
 
-      {/* ─── Features Grid ─── */}
-      <section aria-labelledby="features-heading" style={{ padding: '6rem 0', background: 'linear-gradient(180deg, #0A1628 0%, #0a1f3d 100%)', position: 'relative', overflow: 'hidden' }}>
-        <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="text-center mb-16">
-            <div className="section-tag" style={{ justifyContent: 'center', margin: '0 auto 1rem' }}>
-              Everything You Need
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* FEATURES SECTION */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <section className="features-section">
+        <div className="container-xl">
+          {/* Section Header */}
+          <div className="section-header">
+            <div className="section-badge">
+              <Zap size={14} />
+              <span>Powerful Features</span>
             </div>
-            <h2 id="features-heading" className="font-display text-4xl font-bold text-white mb-4">
-              Your Complete Election{' '}
-              <span className="gradient-text-indigo">Toolkit</span>
+            <h2 className="section-title">
+              Everything You Need to <span className="text-gradient">Vote Smart</span>
             </h2>
-            <p style={{ color: '#94a3b8', maxWidth: '480px', margin: '0 auto', fontSize: '1.05rem' }}>
-              Interactive tools, expert knowledge, and step-by-step guidance — all in one place.
+            <p className="section-description">
+              Comprehensive tools designed to make you an informed and confident voter
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f, i) => (
+          {/* Features Grid */}
+          <div className="features-grid">
+            {features.map((feature, i) => (
               <Link
-                key={f.title}
-                to={f.link}
-                className="card group"
-                style={{
-                  textDecoration: 'none',
-                  animationDelay: `${i * 0.1}s`,
-                }}
+                key={i}
+                to={feature.link}
+                className="feature-card"
+                style={{ animationDelay: `${i * 0.1}s` }}
               >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                  style={{ background: `${f.color}22`, color: f.color }}
-                >
-                  {f.icon}
+                <div className={`feature-icon bg-gradient-to-br ${feature.gradient}`}>
+                  {feature.icon}
                 </div>
-                <h3 className="font-display text-lg font-bold text-white mb-2">{f.title}</h3>
-                <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.6 }}>{f.description}</p>
-                <div className="flex items-center gap-2 mt-4 text-sm font-medium transition-all group-hover:gap-3" style={{ color: f.color }}>
-                  Explore <ArrowRight size={14} />
+                <h3 className="feature-title">{feature.title}</h3>
+                <p className="feature-description">{feature.description}</p>
+                <div className="feature-link">
+                  <span>Explore</span>
+                  <ArrowRight size={16} />
                 </div>
               </Link>
             ))}
@@ -248,35 +239,50 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── Upcoming Dates Banner ─── */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* UPCOMING DATES SECTION */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
       {upcomingDates.length > 0 && (
-        <section aria-labelledby="dates-heading" style={{ padding: '4rem 0', background: 'rgba(79,70,229,0.06)', borderTop: '1px solid rgba(79,70,229,0.12)', borderBottom: '1px solid rgba(79,70,229,0.12)' }}>
+        <section className="dates-section">
           <div className="container-xl">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="section-tag" style={{ margin: 0 }}>📅 Important Dates</div>
+            <div className="section-header">
+              <div className="section-badge">
+                <Calendar size={14} />
+                <span>Stay Updated</span>
+              </div>
+              <h2 className="section-title">
+                Important <span className="text-gradient">Election Dates</span>
+              </h2>
+              <p className="section-description">
+                Never miss a crucial milestone in the election process
+              </p>
             </div>
-            <h2 id="dates-heading" className="font-display text-2xl font-bold text-white mb-6">
-              Upcoming Election Milestones
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {upcomingDates.map(d => (
-                <div key={d.id} className="card" style={{ borderColor: d.days_until <= 30 ? 'rgba(245,158,11,0.3)' : undefined }}>
-                  <div className="flex items-start justify-between mb-3">
-                    <span
-                      className="text-xs font-semibold px-2 py-1 rounded"
-                      style={{
-                        background: d.days_until <= 0 ? 'rgba(245,158,11,0.2)' : 'rgba(79,70,229,0.2)',
-                        color: d.days_until <= 0 ? '#F59E0B' : '#818cf8',
-                      }}
-                    >
-                      {d.days_until <= 0 ? 'TODAY' : d.days_until <= 7 ? 'This Week' : `In ${d.days_until} days`}
-                    </span>
+
+            <div className="dates-grid">
+              {upcomingDates.map((date, i) => (
+                <div
+                  key={date.id}
+                  className="date-card"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <div className="date-badge">
+                    {date.days_until <= 0 ? (
+                      <span className="badge-today">TODAY</span>
+                    ) : date.days_until <= 7 ? (
+                      <span className="badge-soon">This Week</span>
+                    ) : (
+                      <span className="badge-upcoming">{date.days_until} days</span>
+                    )}
                   </div>
-                  <h3 className="font-display font-bold text-white mb-1">{d.event_name}</h3>
-                  <p style={{ color: '#64748b', fontSize: '0.8rem' }}>
-                    {new Date(d.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  <h3 className="date-title">{date.event_name}</h3>
+                  <p className="date-date">
+                    {new Date(date.date).toLocaleDateString('en-IN', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
                   </p>
-                  <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginTop: '0.5rem' }}>{d.description}</p>
+                  <p className="date-description">{date.description}</p>
                 </div>
               ))}
             </div>
@@ -284,37 +290,34 @@ export default function LandingPage() {
         </section>
       )}
 
-      {/* ─── CTA Section ─── */}
-      <section aria-label="Call to action" style={{ padding: '6rem 0', textAlign: 'center' }}>
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* CTA SECTION */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <section className="cta-section">
+        <div className="cta-rays">
+          <AnimatedRays />
+        </div>
         <div className="container-xl">
-          <div
-            style={{
-              background: 'linear-gradient(135deg, rgba(79,70,229,0.2) 0%, rgba(245,158,11,0.1) 100%)',
-              border: '1px solid rgba(79,70,229,0.25)',
-              borderRadius: '24px',
-              padding: '4rem 2rem',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            {/* Decorative element */}
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <h2 className="font-display text-4xl font-bold text-white mb-4">
-                Ready to Become an{' '}
-                <span className="gradient-text">Informed Voter?</span>
-              </h2>
-              <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '480px', margin: '0 auto 2.5rem' }}>
-                Every vote matters. Start with knowledge. Begin your journey to confident civic participation today.
-              </p>
-              <div className="flex justify-center flex-wrap gap-4">
-                <Link to="/check" className="btn-gold text-base">
-                  Check My Eligibility
-                  <ArrowRight size={18} />
-                </Link>
-                <Link to="/guide" className="btn-outline text-base">
-                  Explore Voting Guide
-                </Link>
-              </div>
+          <div className="cta-content">
+            <div className="cta-icon">
+              <Sparkles size={48} />
+            </div>
+            <h2 className="cta-title">
+              Ready to Make Your <span className="text-gradient">Vote Count?</span>
+            </h2>
+            <p className="cta-description">
+              Join thousands of informed voters. Start your journey to confident 
+              civic participation today.
+            </p>
+            <div className="cta-buttons">
+              <Link to="/check" className="cta-primary large">
+                <span>Check Eligibility</span>
+                <ArrowRight size={22} />
+              </Link>
+              <Link to="/guide" className="cta-secondary large">
+                <BookOpen size={22} />
+                <span>View Guide</span>
+              </Link>
             </div>
           </div>
         </div>

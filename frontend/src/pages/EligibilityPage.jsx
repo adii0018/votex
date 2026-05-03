@@ -1,5 +1,4 @@
 import { useState, lazy, Suspense } from 'react';
-import { checkEligibility } from '../api';
 import { CheckCircle, XCircle, AlertCircle, RotateCcw, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +9,64 @@ const initialForm = {
   citizenship: '',
   residency_years: '',
   state: '',
+};
+
+// Frontend eligibility check logic
+const checkEligibilityFrontend = (data) => {
+  const issues = [];
+  const nextSteps = [];
+  
+  // Age check
+  if (data.age < 18) {
+    issues.push({
+      message: 'You must be at least 18 years old to vote.',
+      fix: `You will be eligible to vote when you turn 18. You can pre-register if you're turning 18 soon.`
+    });
+  }
+  
+  // Citizenship check
+  if (data.citizenship !== 'citizen') {
+    issues.push({
+      message: 'Only Indian citizens are eligible to vote.',
+      fix: 'If you are in the process of obtaining citizenship, you can register once it is granted.'
+    });
+  }
+  
+  // Residency check
+  if (data.residency_years < 0.5) {
+    issues.push({
+      message: 'You must have resided in your constituency for at least 6 months.',
+      fix: 'Wait until you complete 6 months of residency, then apply for voter registration.'
+    });
+  }
+  
+  const eligible = issues.length === 0;
+  
+  if (eligible) {
+    return {
+      eligible: true,
+      message: 'Congratulations! You meet all the requirements to vote in Indian elections.',
+      next_steps: [
+        'Check if your name is already on the electoral roll at voters.eci.gov.in',
+        'If not registered, fill Form 6 for new voter registration',
+        'Submit required documents (age proof, address proof, identity proof)',
+        'Receive your Voter ID card (EPIC) at your registered address',
+        'Mark your calendar for the next election day'
+      ]
+    };
+  } else {
+    return {
+      eligible: false,
+      message: 'Based on the information provided, you do not currently meet all eligibility requirements.',
+      issues,
+      next_steps: [
+        'Review the issues listed above',
+        'Take corrective action where possible',
+        'Check back when you meet all requirements',
+        'Visit the Election Commission website for more information'
+      ]
+    };
+  }
 };
 
 export default function EligibilityPage() {
@@ -40,23 +97,26 @@ export default function EligibilityPage() {
     setLoading(true);
     setResult(null);
 
-    try {
-      const data = await checkEligibility({
-        age: parseInt(form.age),
-        citizenship: form.citizenship,
-        residency_years: parseFloat(form.residency_years),
-        state: form.state,
-      });
-      setResult(data);
-      if (data.eligible) {
-        setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 5000);
+    // Simulate API delay for better UX
+    setTimeout(() => {
+      try {
+        const data = checkEligibilityFrontend({
+          age: parseInt(form.age),
+          citizenship: form.citizenship,
+          residency_years: parseFloat(form.residency_years),
+          state: form.state,
+        });
+        setResult(data);
+        if (data.eligible) {
+          setShowConfetti(true);
+          setTimeout(() => setShowConfetti(false), 5000);
+        }
+      } catch (err) {
+        setResult({ error: true, message: 'Failed to check eligibility. Please try again.' });
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setResult({ error: true, message: 'Failed to check eligibility. Please try again.' });
-    } finally {
-      setLoading(false);
-    }
+    }, 800);
   };
 
   const handleChange = (field) => (e) => {

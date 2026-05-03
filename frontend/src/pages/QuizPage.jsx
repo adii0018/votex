@@ -1,25 +1,94 @@
 import { useState, lazy, Suspense } from 'react';
-import useSWR from 'swr';
-import { fetchQuiz } from '../api';
 import { Trophy, RotateCcw, Share2, ChevronRight } from 'lucide-react';
 
 const ReactConfetti = lazy(() => import('react-confetti'));
 
-function QuizSkeleton() {
-  return (
-    <div className="card" style={{ maxWidth: '640px', margin: '0 auto' }}>
-      <div style={{ height: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', marginBottom: '1.5rem', width: '60%' }} />
-      <div style={{ height: '16px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', marginBottom: '2rem' }} />
-      {[1, 2, 3, 4].map(i => (
-        <div key={i} style={{ height: '52px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', marginBottom: '0.75rem' }} />
-      ))}
-    </div>
-  );
-}
+// Dummy quiz data
+const DUMMY_QUESTIONS = [
+  {
+    id: 1,
+    question: 'What is the minimum age to vote in India?',
+    options: ['16 years', '18 years', '21 years', '25 years'],
+    correct_answer: '18 years',
+    explanation: 'The minimum voting age in India is 18 years as per the 61st Constitutional Amendment Act, 1988.',
+    difficulty: 'easy'
+  },
+  {
+    id: 2,
+    question: 'What does EVM stand for?',
+    options: ['Electronic Voting Machine', 'Electoral Vote Manager', 'Election Verification Module', 'Electronic Vote Monitor'],
+    correct_answer: 'Electronic Voting Machine',
+    explanation: 'EVM stands for Electronic Voting Machine, which is used for recording votes in Indian elections.',
+    difficulty: 'easy'
+  },
+  {
+    id: 3,
+    question: 'How many Lok Sabha constituencies are there in India?',
+    options: ['500', '543', '552', '600'],
+    correct_answer: '543',
+    explanation: 'There are 543 Lok Sabha constituencies in India, with 2 additional nominated members from the Anglo-Indian community.',
+    difficulty: 'medium'
+  },
+  {
+    id: 4,
+    question: 'What is VVPAT?',
+    options: ['Voter Verified Paper Audit Trail', 'Virtual Voting Paper Authentication Tool', 'Verified Vote Processing and Tracking', 'Voter Validation Paper Authentication Technology'],
+    correct_answer: 'Voter Verified Paper Audit Trail',
+    explanation: 'VVPAT is a Voter Verified Paper Audit Trail that allows voters to verify that their vote was cast correctly.',
+    difficulty: 'medium'
+  },
+  {
+    id: 5,
+    question: 'What is the Model Code of Conduct?',
+    options: ['A dress code for voters', 'Guidelines for political parties during elections', 'Rules for election officials', 'A code for EVM manufacturers'],
+    correct_answer: 'Guidelines for political parties during elections',
+    explanation: 'The Model Code of Conduct is a set of guidelines issued by the Election Commission to regulate political parties and candidates during elections.',
+    difficulty: 'medium'
+  },
+  {
+    id: 6,
+    question: 'Who is the constitutional head of the Election Commission of India?',
+    options: ['Prime Minister', 'President', 'Chief Election Commissioner', 'Chief Justice of India'],
+    correct_answer: 'Chief Election Commissioner',
+    explanation: 'The Chief Election Commissioner is the constitutional head of the Election Commission of India.',
+    difficulty: 'hard'
+  },
+  {
+    id: 7,
+    question: 'What is NOTA?',
+    options: ['Notice of Total Absence', 'None of the Above', 'National Online Tracking Application', 'New Official Tracking Algorithm'],
+    correct_answer: 'None of the Above',
+    explanation: 'NOTA stands for "None of the Above" and allows voters to reject all candidates in an election.',
+    difficulty: 'easy'
+  },
+  {
+    id: 8,
+    question: 'What is the term duration of Lok Sabha?',
+    options: ['4 years', '5 years', '6 years', '7 years'],
+    correct_answer: '5 years',
+    explanation: 'The Lok Sabha has a term of 5 years from the date of its first meeting, unless dissolved earlier.',
+    difficulty: 'easy'
+  },
+  {
+    id: 9,
+    question: 'What is the security deposit for a Lok Sabha candidate?',
+    options: ['₹10,000', '₹25,000', '₹50,000', '₹1,00,000'],
+    correct_answer: '₹25,000',
+    explanation: 'A Lok Sabha candidate must deposit ₹25,000 as security, which is forfeited if they get less than 1/6th of valid votes.',
+    difficulty: 'hard'
+  },
+  {
+    id: 10,
+    question: 'How long before polling day does the campaign silence period begin?',
+    options: ['24 hours', '48 hours', '72 hours', '96 hours'],
+    correct_answer: '48 hours',
+    explanation: 'The campaign silence period begins 48 hours before polling day, during which no campaigning is allowed.',
+    difficulty: 'medium'
+  }
+];
 
 export default function QuizPage() {
-  const { data, error, isLoading, mutate } = useSWR('quiz', fetchQuiz, { revalidateOnFocus: false });
-  const questions = data?.questions || [];
+  const [questions] = useState(DUMMY_QUESTIONS);
 
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -54,7 +123,6 @@ export default function QuizPage() {
   };
 
   const handleRestart = () => {
-    mutate();
     setCurrent(0);
     setSelected(null);
     setAnswered(false);
@@ -72,23 +140,6 @@ export default function QuizPage() {
     if (percentage >= 40) return { label: 'Good Start! Keep Learning 📚', color: '#4F46E5' };
     return { label: 'Keep Practicing! 💪', color: '#f43f5e' };
   };
-
-  if (isLoading) return (
-    <main style={{ paddingTop: '5rem' }}>
-      <div className="container-xl" style={{ padding: '3rem 1.5rem 6rem' }}>
-        <QuizSkeleton />
-      </div>
-    </main>
-  );
-
-  if (error) return (
-    <main style={{ paddingTop: '5rem' }}>
-      <div className="container-xl text-center" style={{ padding: '6rem 1.5rem' }}>
-        <p style={{ color: '#f43f5e' }}>Failed to load quiz questions. Please try again.</p>
-        <button className="btn-primary mt-4" onClick={() => mutate()}>Retry</button>
-      </div>
-    </main>
-  );
 
   return (
     <main style={{ paddingTop: '5rem' }}>
