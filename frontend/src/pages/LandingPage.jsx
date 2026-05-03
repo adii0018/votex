@@ -1,58 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PlayCircle, Shield, BookOpen, CheckCircle, Zap, Award } from 'lucide-react';
 import useSWR from 'swr';
 import { fetchDates } from '../api';
 import ShapeGrid from '../components/ShapeGrid';
 import GlitchText from '../components/GlitchText';
-import Prism from '../components/Prism';
-
-// Animated particle background
-function ParticleBackground() {
-  const particles = Array.from({ length: 25 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 2,
-    x: Math.random() * 100,
-    delay: Math.random() * 8,
-    duration: Math.random() * 12 + 8,
-    opacity: Math.random() * 0.4 + 0.1,
-  }));
-
-  return (
-    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-      {particles.map(p => (
-        <div
-          key={p.id}
-          className="particle"
-          style={{
-            width: p.size,
-            height: p.size,
-            left: `${p.x}%`,
-            bottom: '-10px',
-            background: p.id % 3 === 0 ? '#F59E0B' : p.id % 3 === 1 ? '#4F46E5' : '#818cf8',
-            animationDuration: `${p.duration}s`,
-            animationDelay: `${p.delay}s`,
-            opacity: p.opacity,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Wave decoration at bottom of hero
-function WaveDecoration() {
-  return (
-    <div className="wave-container">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
-        <path
-          d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"
-          fill="rgba(10,22,40,1)"
-        />
-      </svg>
-    </div>
-  );
-}
 
 const features = [
   {
@@ -153,8 +105,6 @@ export default function LandingPage() {
           />
         </div>
 
-        <ParticleBackground />
-
         <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
             {/* Tag */}
@@ -252,98 +202,10 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-
-        {/* Decorative Prism - Left Side */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '-150px',
-            top: '20%',
-            width: '400px',
-            height: '400px',
-            pointerEvents: 'none',
-            opacity: 0.6,
-            zIndex: 0,
-          }}
-          aria-hidden="true"
-        >
-          <Prism
-            animationType="3drotate"
-            timeScale={0.3}
-            height={3.5}
-            baseWidth={5.5}
-            scale={2.8}
-            hueShift={0.5}
-            colorFrequency={1.2}
-            noise={0.3}
-            glow={1.5}
-            bloom={1.2}
-          />
-        </div>
-
-        {/* Decorative Prism - Right Side */}
-        <div
-          style={{
-            position: 'absolute',
-            right: '-100px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: '500px',
-            height: '500px',
-            pointerEvents: 'none',
-            opacity: 0.5,
-            zIndex: 0,
-          }}
-          aria-hidden="true"
-        >
-          <Prism
-            animationType="rotate"
-            timeScale={0.5}
-            height={4}
-            baseWidth={6}
-            scale={3.2}
-            hueShift={1.2}
-            colorFrequency={0.8}
-            noise={0.4}
-            glow={1.8}
-            bloom={1.5}
-          />
-        </div>
-
-        <WaveDecoration />
       </section>
 
       {/* ─── Features Grid ─── */}
       <section aria-labelledby="features-heading" style={{ padding: '6rem 0', background: 'linear-gradient(180deg, #0A1628 0%, #0a1f3d 100%)', position: 'relative', overflow: 'hidden' }}>
-        {/* Background Prism for Features Section */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '800px',
-            height: '800px',
-            pointerEvents: 'none',
-            opacity: 0.08,
-            zIndex: 0,
-          }}
-          aria-hidden="true"
-        >
-          <Prism
-            animationType="3drotate"
-            timeScale={0.2}
-            height={6}
-            baseWidth={8}
-            scale={5}
-            hueShift={1.5}
-            colorFrequency={0.6}
-            noise={0.1}
-            glow={2.5}
-            bloom={2}
-          />
-        </div>
-
         <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
           <div className="text-center mb-16">
             <div className="section-tag" style={{ justifyContent: 'center', margin: '0 auto 1rem' }}>
@@ -435,37 +297,7 @@ export default function LandingPage() {
               overflow: 'hidden',
             }}
           >
-            {/* Decorative Prism in CTA */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '600px',
-                height: '600px',
-                pointerEvents: 'none',
-                opacity: 0.15,
-                zIndex: 0,
-              }}
-              aria-hidden="true"
-            >
-              <Prism
-                animationType="hover"
-                timeScale={0.4}
-                height={5}
-                baseWidth={7}
-                scale={4}
-                hueShift={0.8}
-                colorFrequency={1.5}
-                noise={0.2}
-                glow={2}
-                bloom={2}
-                hoverStrength={1.5}
-                inertia={0.08}
-              />
-            </div>
-
+            {/* Decorative element */}
             <div style={{ position: 'relative', zIndex: 1 }}>
               <h2 className="font-display text-4xl font-bold text-white mb-4">
                 Ready to Become an{' '}
