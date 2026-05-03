@@ -345,6 +345,264 @@ export default function TimelinePage() {
             <p style={{ color: '#64748b', fontSize: '0.9rem' }}>← Scroll and click any stage above to explore it in detail</p>
           </div>
         )}
+
+        {/* Important Dates Section */}
+        <div style={{ marginTop: '5rem' }}>
+          <div className="mb-8">
+            <div className="section-tag">📅 Important Dates</div>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
+              Upcoming Election <span className="gradient-text">Milestones</span>
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '540px' }}>
+              Mark your calendar with these key dates for the upcoming elections.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+            {/* Date Card 1 */}
+            <div className="card" style={{ borderLeft: '3px solid #4F46E5' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(79, 70, 229, 0.15)',
+                  border: '1px solid rgba(79, 70, 229, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#4F46E5', lineHeight: 1 }}>15</div>
+                  <div style={{ fontSize: '0.65rem', color: '#818cf8', textTransform: 'uppercase' }}>Mar</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Election Announcement
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    Election Commission announces schedule and Model Code of Conduct begins
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 2 */}
+            <div className="card" style={{ borderLeft: '3px solid #F59E0B' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(245, 158, 11, 0.15)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#F59E0B', lineHeight: 1 }}>20</div>
+                  <div style={{ fontSize: '0.65rem', color: '#fbbf24', textTransform: 'uppercase' }}>Mar</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Last Date for Registration
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    Final day to register as a new voter or update your details
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 3 */}
+            <div className="card" style={{ borderLeft: '3px solid #10b981' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#10b981', lineHeight: 1 }}>25</div>
+                  <div style={{ fontSize: '0.65rem', color: '#34d399', textTransform: 'uppercase' }}>Mar</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Nomination Filing Begins
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    Candidates start filing nomination papers with Returning Officers
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 4 */}
+            <div className="card" style={{ borderLeft: '3px solid #8b5cf6' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(139, 92, 246, 0.15)',
+                  border: '1px solid rgba(139, 92, 246, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#8b5cf6', lineHeight: 1 }}>05</div>
+                  <div style={{ fontSize: '0.65rem', color: '#a78bfa', textTransform: 'uppercase' }}>Apr</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Campaigning Period
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    Political parties and candidates actively campaign for votes
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 5 */}
+            <div className="card" style={{ borderLeft: '3px solid #f43f5e' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(244, 63, 94, 0.15)',
+                  border: '1px solid rgba(244, 63, 94, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#f43f5e', lineHeight: 1 }}>19</div>
+                  <div style={{ fontSize: '0.65rem', color: '#fb7185', textTransform: 'uppercase' }}>Apr</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Voting Day - Phase 1
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    First phase of polling begins across designated constituencies
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 6 */}
+            <div className="card" style={{ borderLeft: '3px solid #06b6d4' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(6, 182, 212, 0.15)',
+                  border: '1px solid rgba(6, 182, 212, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#06b6d4', lineHeight: 1 }}>01</div>
+                  <div style={{ fontSize: '0.65rem', color: '#22d3ee', textTransform: 'uppercase' }}>Jun</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Vote Counting Day
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    Votes are counted and results are declared constituency-wise
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 7 */}
+            <div className="card" style={{ borderLeft: '3px solid #22c55e' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(34, 197, 94, 0.15)',
+                  border: '1px solid rgba(34, 197, 94, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#22c55e', lineHeight: 1 }}>15</div>
+                  <div style={{ fontSize: '0.65rem', color: '#4ade80', textTransform: 'uppercase' }}>Jun</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Oath Taking Ceremony
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    Newly elected representatives take oath and government is formed
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Card 8 */}
+            <div className="card" style={{ borderLeft: '3px solid #a855f7' }}>
+              <div className="flex items-start gap-3">
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '12px', 
+                  background: 'rgba(168, 85, 247, 0.15)',
+                  border: '1px solid rgba(168, 85, 247, 0.3)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#a855f7', lineHeight: 1 }}>20</div>
+                  <div style={{ fontSize: '0.65rem', color: '#c084fc', textTransform: 'uppercase' }}>Jun</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: '1rem' }}>
+                    Parliament Session Begins
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    First session of the newly elected Parliament commences
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Note */}
+          <div className="mt-6 p-4 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.2)' }}>
+            <p className="text-sm" style={{ color: '#fbbf24', display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+              <span style={{ flexShrink: 0 }}>ℹ️</span>
+              <span>
+                <strong>Note:</strong> These dates are indicative and based on typical election schedules. 
+                For official dates, please visit the Election Commission of India website at <a href="https://eci.gov.in" target="_blank" rel="noopener noreferrer" style={{ color: '#fbbf24', textDecoration: 'underline' }}>eci.gov.in</a>
+              </span>
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   );

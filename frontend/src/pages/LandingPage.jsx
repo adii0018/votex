@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, PlayCircle, Shield, BookOpen, CheckCircle, Zap, Award } from 'lucide-react';
 import useSWR from 'swr';
 import { fetchDates } from '../api';
+import ShapeGrid from '../components/ShapeGrid';
+import CardSwap, { Card } from '../components/CardSwap';
 
 // Animated particle background
 function ParticleBackground() {
@@ -123,28 +125,50 @@ export default function LandingPage() {
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
-          background: 'radial-gradient(ellipse at 20% 50%, rgba(79,70,229,0.2) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(245,158,11,0.12) 0%, transparent 50%), linear-gradient(180deg, #0A1628 0%, #0f2040 100%)',
+          background: 'linear-gradient(180deg, #0A1628 0%, #0f2040 100%)',
           paddingTop: '6rem',
           paddingBottom: '8rem',
           overflow: 'hidden',
         }}
       >
+        {/* ShapeGrid Background */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.15,
+            pointerEvents: 'none',
+          }}
+        >
+          <ShapeGrid
+            speed={0.69}
+            squareSize={40}
+            direction="diagonal"
+            borderColor="#2F293A"
+            hoverFillColor="#222"
+            shape="hexagon"
+            hoverTrailAmount={0}
+            hoverColor="#10B981"
+          />
+        </div>
+
         <ParticleBackground />
 
         <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: '720px' }}>
-            {/* Tag */}
-            <div
-              className="section-tag"
-              style={{
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
-                transition: 'all 0.6s ease',
-              }}
-            >
-              <span>🗳️</span>
-              India's #1 Election Education Platform
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div style={{ maxWidth: '720px' }}>
+              {/* Tag */}
+              <div
+                className="section-tag"
+                style={{
+                  opacity: heroVisible ? 1 : 0,
+                  transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
+                  transition: 'all 0.6s ease',
+                }}
+              >
+                <span>🗳️</span>
+                India's #1 Election Education Platform
+              </div>
 
             {/* Heading */}
             <h1
@@ -217,6 +241,70 @@ export default function LandingPage() {
                   </div>
                 </div>
               ))}
+            </div>
+            </div>
+
+            {/* CardSwap Component */}
+            <div 
+              style={{ 
+                height: '600px', 
+                position: 'relative',
+                opacity: heroVisible ? 1 : 0,
+                transform: heroVisible ? 'translateX(0)' : 'translateX(50px)',
+                transition: 'all 0.8s ease 0.4s',
+              }}
+            >
+              <CardSwap
+                width={380}
+                height={320}
+                cardDistance={50}
+                verticalDistance={60}
+                delay={4000}
+                pauseOnHover={true}
+                skewAmount={4}
+                easing="elastic"
+              >
+                <Card>
+                  <div className="card-icon" style={{ background: 'rgba(79, 70, 229, 0.2)' }}>
+                    🗳️
+                  </div>
+                  <h3>Register to Vote</h3>
+                  <p>
+                    Get your voter ID card and register online through the National Voter Service Portal. 
+                    It's quick, easy, and essential for participating in democracy.
+                  </p>
+                </Card>
+                <Card>
+                  <div className="card-icon" style={{ background: 'rgba(245, 158, 11, 0.2)' }}>
+                    📋
+                  </div>
+                  <h3>Know Your Rights</h3>
+                  <p>
+                    Every citizen has the right to vote freely and fairly. Learn about your voting rights, 
+                    polling procedures, and how to report irregularities.
+                  </p>
+                </Card>
+                <Card>
+                  <div className="card-icon" style={{ background: 'rgba(16, 185, 129, 0.2)' }}>
+                    🎯
+                  </div>
+                  <h3>Make Informed Choices</h3>
+                  <p>
+                    Research candidates, understand their manifestos, and make decisions based on facts. 
+                    Your vote shapes the future of the nation.
+                  </p>
+                </Card>
+                <Card>
+                  <div className="card-icon" style={{ background: 'rgba(139, 92, 246, 0.2)' }}>
+                    ⚡
+                  </div>
+                  <h3>Election Day Ready</h3>
+                  <p>
+                    Know your polling station, carry valid ID, and arrive early. 
+                    Follow the voting process and ensure your vote counts.
+                  </p>
+                </Card>
+              </CardSwap>
             </div>
           </div>
         </div>
