@@ -18,41 +18,149 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer role="contentinfo" style={{ background: 'rgba(5, 12, 25, 0.8)', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-      <div className="container-xl py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer 
+      role="contentinfo" 
+      style={{ 
+        background: 'rgba(5, 12, 25, 0.95)', 
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        marginTop: 'auto'
+      }}
+    >
+      <div className="container-xl" style={{ padding: '4rem 1.5rem 2rem' }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '3rem',
+          marginBottom: '3rem'
+        }}>
           {/* Brand */}
-          <div>
-            <Link to="/" className="flex items-center gap-2 mb-4" style={{ textDecoration: 'none' }}>
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-                   style={{ background: 'linear-gradient(135deg, #4F46E5, #F59E0B)' }}>
-                <Vote size={20} className="text-white" />
+          <div style={{ gridColumn: 'span 1' }}>
+            <Link 
+              to="/" 
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.5rem', 
+                marginBottom: '1rem',
+                textDecoration: 'none' 
+              }}
+            >
+              <div 
+                style={{ 
+                  width: '36px', 
+                  height: '36px', 
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'linear-gradient(135deg, #4F46E5, #F59E0B)'
+                }}
+              >
+                <Vote size={20} style={{ color: 'white' }} />
               </div>
-              <span className="font-display text-xl font-bold text-white">
+              <span className="font-display" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'white' }}>
                 Vote<span style={{ color: '#F59E0B' }}>X</span>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: '#94a3b8' }}>
+            <p style={{ 
+              fontSize: '0.875rem', 
+              lineHeight: '1.6', 
+              marginBottom: '1.5rem',
+              color: '#94a3b8',
+              maxWidth: '280px'
+            }}>
               Empowering citizens with knowledge. Understand the complete election process — from registration to results.
             </p>
-            <div className="flex gap-3">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
-                 className="w-8 h-8 rounded-lg flex items-center justify-center transition-all hover:scale-110"
-                 style={{ background: 'rgba(255,255,255,0.07)', color: '#94a3b8' }}
-                 aria-label="Twitter">
-                <MessageSquare size={15} />
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '32px', 
+                  height: '32px', 
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: '#94a3b8',
+                  transition: 'all 0.2s',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}
+                aria-label="Twitter"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(79,70,229,0.2)';
+                  e.currentTarget.style.color = '#818cf8';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                  e.currentTarget.style.color = '#94a3b8';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <MessageSquare size={16} />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                 className="w-8 h-8 rounded-lg flex items-center justify-center transition-all hover:scale-110"
-                 style={{ background: 'rgba(255,255,255,0.07)', color: '#94a3b8' }}
-                 aria-label="GitHub">
-                <Code size={15} />
+              <a 
+                href="https://github.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '32px', 
+                  height: '32px', 
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: '#94a3b8',
+                  transition: 'all 0.2s',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}
+                aria-label="GitHub"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(79,70,229,0.2)';
+                  e.currentTarget.style.color = '#818cf8';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                  e.currentTarget.style.color = '#94a3b8';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <Code size={16} />
               </a>
-              <a href="https://eci.gov.in" target="_blank" rel="noopener noreferrer"
-                 className="w-8 h-8 rounded-lg flex items-center justify-center transition-all hover:scale-110"
-                 style={{ background: 'rgba(255,255,255,0.07)', color: '#94a3b8' }}
-                 aria-label="Election Commission of India">
-                <ExternalLink size={15} />
+              <a 
+                href="https://eci.gov.in" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '32px', 
+                  height: '32px', 
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: '#94a3b8',
+                  transition: 'all 0.2s',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}
+                aria-label="Election Commission of India"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(79,70,229,0.2)';
+                  e.currentTarget.style.color = '#818cf8';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                  e.currentTarget.style.color = '#94a3b8';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <ExternalLink size={16} />
               </a>
             </div>
           </div>
@@ -60,14 +168,30 @@ export default function Footer() {
           {/* Links */}
           {footerLinks.map(group => (
             <div key={group.group}>
-              <h3 className="text-sm font-semibold mb-4" style={{ color: '#F59E0B', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              <h3 style={{ 
+                fontSize: '0.75rem', 
+                fontWeight: '600', 
+                marginBottom: '1rem',
+                color: '#F59E0B',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase'
+              }}>
                 {group.group}
               </h3>
-              <ul className="space-y-2" style={{ listStyle: 'none' }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {group.links.map(link => (
                   <li key={link.to}>
-                    <Link to={link.to} className="text-sm transition-colors hover:text-white"
-                          style={{ color: '#94a3b8', textDecoration: 'none' }}>
+                    <Link 
+                      to={link.to}
+                      style={{ 
+                        fontSize: '0.875rem',
+                        color: '#94a3b8',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#e2e8f0'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -78,16 +202,48 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-12 pt-8" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-center md:text-left" style={{ color: '#64748b' }}>
-              © 2024 VoteX. Built for civic education.
+        <div style={{ 
+          marginTop: '3rem', 
+          paddingTop: '2rem',
+          borderTop: '1px solid rgba(255,255,255,0.08)'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <p style={{ 
+              fontSize: '0.75rem',
+              textAlign: 'center',
+              color: '#64748b',
+              margin: 0
+            }}>
+              © {new Date().getFullYear()} VoteX. Built for civic education. All rights reserved.
             </p>
-            <p className="text-xs text-center" style={{ color: '#64748b', maxWidth: '480px' }}>
-              ⚠️ VoteX is an educational platform. For official election information, visit your national{' '}
-              <a href="https://eci.gov.in" target="_blank" rel="noopener noreferrer"
-                 className="hover:text-white transition-colors" style={{ color: '#94a3b8' }}>
-                Election Commission website
+            <p style={{ 
+              fontSize: '0.75rem',
+              textAlign: 'center',
+              color: '#64748b',
+              maxWidth: '600px',
+              margin: 0,
+              lineHeight: '1.5'
+            }}>
+              ⚠️ VoteX is an educational platform. For official election information, visit{' '}
+              <a 
+                href="https://eci.gov.in" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  color: '#94a3b8',
+                  textDecoration: 'underline',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#e2e8f0'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+              >
+                Election Commission of India
               </a>.
             </p>
           </div>

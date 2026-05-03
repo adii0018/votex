@@ -314,8 +314,37 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Features Grid ─── */}
-      <section aria-labelledby="features-heading" style={{ padding: '6rem 0', background: 'linear-gradient(180deg, #0A1628 0%, #0a1f3d 100%)' }}>
-        <div className="container-xl">
+      <section aria-labelledby="features-heading" style={{ padding: '6rem 0', background: 'linear-gradient(180deg, #0A1628 0%, #0a1f3d 100%)', position: 'relative', overflow: 'hidden' }}>
+        {/* Background Prism for Features Section */}
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '800px',
+            height: '800px',
+            pointerEvents: 'none',
+            opacity: 0.08,
+            zIndex: 0,
+          }}
+          aria-hidden="true"
+        >
+          <Prism
+            animationType="3drotate"
+            timeScale={0.2}
+            height={6}
+            baseWidth={8}
+            scale={5}
+            hueShift={1.5}
+            colorFrequency={0.6}
+            noise={0.1}
+            glow={2.5}
+            bloom={2}
+          />
+        </div>
+
+        <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
           <div className="text-center mb-16">
             <div className="section-tag" style={{ justifyContent: 'center', margin: '0 auto 1rem' }}>
               Everything You Need
