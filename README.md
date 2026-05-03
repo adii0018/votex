@@ -48,6 +48,31 @@
 
 ### 🗳️ Core Features
 
+- **User Authentication System** 🔐
+  - User registration and login
+  - Profile management with voting information
+  - Quiz attempt tracking and statistics
+  - Bookmarks for FAQs and glossary terms
+  - Personal notification center
+  
+- **Progressive Web App (PWA)** 📱
+  - Install as native app on mobile/desktop
+  - Offline support with service worker
+  - Fast loading with intelligent caching
+  - Push notification ready
+  
+- **Notification System** 🔔
+  - Email notifications (welcome, achievements)
+  - In-app notification center
+  - Deadline reminders
+  - Quiz achievement alerts
+  
+- **Multilingual Support** 🌐
+  - English and Hindi languages
+  - Easy language switching
+  - Persistent language preference
+  - Expandable to more languages
+
 - **Voter Eligibility Checker** - Verify voting eligibility with smart validation
 - **Interactive Quiz System** - Test your knowledge with difficulty-based questions
 - **Comprehensive Glossary** - Learn electoral terms and definitions
@@ -66,11 +91,16 @@
 ### 🔧 Technical Features
 
 - **RESTful API** - Well-structured Django REST Framework backend
+- **Token Authentication** - Secure user authentication
+- **User Profiles** - Extended user information with voting details
 - **Rate Limiting** - Protect against abuse
 - **CORS Support** - Secure cross-origin requests
 - **Caching** - Optimized performance
 - **Admin Panel** - Easy content management
 - **Seed Data** - Quick setup with sample data
+- **PWA Support** - Installable, offline-capable app
+- **Email System** - Automated email notifications
+- **Multilingual** - English and Hindi support
 
 ---
 
@@ -230,6 +260,41 @@ http://localhost:8000/api/
 | `GET` | `/api/faqs/` | Get all FAQs |
 | `GET` | `/api/faqs/?category=voting` | Filter by category |
 | `GET` | `/api/faqs/search/?q=register` | Search FAQs |
+
+#### 🔐 Authentication Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/register/` | Register new user |
+| `POST` | `/api/auth/login/` | Login user |
+| `POST` | `/api/auth/logout/` | Logout user |
+| `GET` | `/api/auth/profile/` | Get user profile |
+| `PUT` | `/api/auth/profile/update/` | Update profile |
+| `POST` | `/api/auth/change-password/` | Change password |
+
+#### 📊 Quiz Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/quiz/` | Get random questions |
+| `POST` | `/api/quiz/attempt/` | Save quiz attempt |
+| `GET` | `/api/quiz/history/` | Get quiz history & stats |
+
+#### 🔖 Bookmark Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/bookmarks/` | Get user bookmarks |
+| `POST` | `/api/bookmarks/add/` | Add bookmark |
+| `DELETE` | `/api/bookmarks/<id>/remove/` | Remove bookmark |
+
+#### 🔔 Notification Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/notifications/` | Get notifications |
+| `POST` | `/api/notifications/<id>/read/` | Mark as read |
+| `POST` | `/api/notifications/read-all/` | Mark all as read |
 
 #### 📖 Glossary Endpoints
 

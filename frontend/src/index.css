@@ -940,3 +940,27 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(79, 70, 229, 0.4);
   color: white;
 }
+
+/* ─── Hero Glitch Text Customization ─── */
+.hero-glitch.glitch {
+  font-size: clamp(2.5rem, 8vw, 5rem) !important;
+  font-weight: 900;
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+  color: #fff;
+  white-space: normal;
+}
+
+.hero-glitch.glitch::after,
+.hero-glitch.glitch::before {
+  background: transparent !important;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .hero-glitch {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+  }
+}

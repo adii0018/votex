@@ -4,6 +4,8 @@ import { ArrowRight, PlayCircle, Shield, BookOpen, CheckCircle, Zap, Award } fro
 import useSWR from 'swr';
 import { fetchDates } from '../api';
 import ShapeGrid from '../components/ShapeGrid';
+import GlitchText from '../components/GlitchText';
+import Prism from '../components/Prism';
 
 // Animated particle background
 function ParticleBackground() {
@@ -170,22 +172,24 @@ export default function LandingPage() {
               India's #1 Election Education Platform
             </div>
 
-            {/* Heading */}
-            <h1
-              className="font-display"
+            {/* Heading with Glitch Effect */}
+            <div
               style={{
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                fontWeight: 800,
-                lineHeight: 1.1,
                 marginBottom: '1.5rem',
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'all 0.7s ease 0.1s',
               }}
             >
-              Know Your Vote.{' '}
-              <span className="gradient-text">Own Your Democracy.</span>
-            </h1>
+              <GlitchText 
+                speed={1.2} 
+                enableShadows={true} 
+                enableOnHover={false}
+                className="hero-glitch"
+              >
+                Your Vote, Your Voice
+              </GlitchText>
+            </div>
 
             {/* Subheading */}
             <p
@@ -194,14 +198,14 @@ export default function LandingPage() {
                 color: '#94a3b8',
                 lineHeight: 1.7,
                 marginBottom: '2.5rem',
-                maxWidth: '520px',
+                maxWidth: '560px',
                 margin: '0 auto 2.5rem',
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'all 0.7s ease 0.2s',
               }}
             >
-              VoteX guides you through every step of the election process — from registration to results. Interactive, accessible, and built for every citizen.
+              Master the election process from registration to results. Interactive tools, expert guidance, and everything you need to vote with confidence.
             </p>
 
             {/* CTAs */}
@@ -249,9 +253,36 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Decorative orb */}
+        {/* Decorative Prism - Left Side */}
         <div
-          className="animate-float"
+          style={{
+            position: 'absolute',
+            left: '-150px',
+            top: '20%',
+            width: '400px',
+            height: '400px',
+            pointerEvents: 'none',
+            opacity: 0.6,
+            zIndex: 0,
+          }}
+          aria-hidden="true"
+        >
+          <Prism
+            animationType="3drotate"
+            timeScale={0.3}
+            height={3.5}
+            baseWidth={5.5}
+            scale={2.8}
+            hueShift={0.5}
+            colorFrequency={1.2}
+            noise={0.3}
+            glow={1.5}
+            bloom={1.2}
+          />
+        </div>
+
+        {/* Decorative Prism - Right Side */}
+        <div
           style={{
             position: 'absolute',
             right: '-100px',
@@ -259,12 +290,25 @@ export default function LandingPage() {
             transform: 'translateY(-50%)',
             width: '500px',
             height: '500px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(79,70,229,0.03) 60%, transparent 80%)',
             pointerEvents: 'none',
+            opacity: 0.5,
+            zIndex: 0,
           }}
           aria-hidden="true"
-        />
+        >
+          <Prism
+            animationType="rotate"
+            timeScale={0.5}
+            height={4}
+            baseWidth={6}
+            scale={3.2}
+            hueShift={1.2}
+            colorFrequency={0.8}
+            noise={0.4}
+            glow={1.8}
+            bloom={1.5}
+          />
+        </div>
 
         <WaveDecoration />
       </section>
@@ -362,22 +406,54 @@ export default function LandingPage() {
               overflow: 'hidden',
             }}
           >
-            <div aria-hidden="true" style={{ position: 'absolute', top: '-60px', right: '-60px', width: '240px', height: '240px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.1), transparent)', pointerEvents: 'none' }} />
-            <h2 className="font-display text-4xl font-bold text-white mb-4">
-              Ready to Become an{' '}
-              <span className="gradient-text">Informed Voter?</span>
-            </h2>
-            <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '480px', margin: '0 auto 2.5rem' }}>
-              Every vote matters. Start with knowledge. Begin your journey to confident civic participation today.
-            </p>
-            <div className="flex justify-center flex-wrap gap-4">
-              <Link to="/check" className="btn-gold text-base">
-                Check My Eligibility
-                <ArrowRight size={18} />
-              </Link>
-              <Link to="/guide" className="btn-outline text-base">
-                Explore Voting Guide
-              </Link>
+            {/* Decorative Prism in CTA */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '600px',
+                height: '600px',
+                pointerEvents: 'none',
+                opacity: 0.15,
+                zIndex: 0,
+              }}
+              aria-hidden="true"
+            >
+              <Prism
+                animationType="hover"
+                timeScale={0.4}
+                height={5}
+                baseWidth={7}
+                scale={4}
+                hueShift={0.8}
+                colorFrequency={1.5}
+                noise={0.2}
+                glow={2}
+                bloom={2}
+                hoverStrength={1.5}
+                inertia={0.08}
+              />
+            </div>
+
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <h2 className="font-display text-4xl font-bold text-white mb-4">
+                Ready to Become an{' '}
+                <span className="gradient-text">Informed Voter?</span>
+              </h2>
+              <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '480px', margin: '0 auto 2.5rem' }}>
+                Every vote matters. Start with knowledge. Begin your journey to confident civic participation today.
+              </p>
+              <div className="flex justify-center flex-wrap gap-4">
+                <Link to="/check" className="btn-gold text-base">
+                  Check My Eligibility
+                  <ArrowRight size={18} />
+                </Link>
+                <Link to="/guide" className="btn-outline text-base">
+                  Explore Voting Guide
+                </Link>
+              </div>
             </div>
           </div>
         </div>

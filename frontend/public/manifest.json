@@ -1,0 +1,29 @@
+{
+  "name": "VoteX - Your Voting Platform",
+  "short_name": "VoteX",
+  "description": "Empowering Democracy Through Technology",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4F46E5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "government", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/assets/hero.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

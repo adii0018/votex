@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'api',
 ]
@@ -89,6 +90,10 @@ CORS_ALLOW_CREDENTIALS = True
 
 # DRF
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle',
@@ -111,3 +116,21 @@ CACHES = {
         'LOCATION': 'votex-cache',
     }
 }
+
+# Email Configuration (for notifications)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Development
+# For production, use SMTP:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@gmail.com'
+# EMAIL_HOST_PASSWORD = 'your-app-password'
+DEFAULT_FROM_EMAIL = 'noreply@votex.com'
+
+# Internationalization (Multilingual Support)
+LANGUAGES = [
+    ('en', 'English'),
+    ('hi', 'Hindi'),
+]
+LOCALE_PATHS = [BASE_DIR / 'locale']
