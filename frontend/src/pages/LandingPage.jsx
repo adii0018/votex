@@ -4,7 +4,6 @@ import { ArrowRight, PlayCircle, Shield, BookOpen, CheckCircle, Zap, Award } fro
 import useSWR from 'swr';
 import { fetchDates } from '../api';
 import ShapeGrid from '../components/ShapeGrid';
-import CardSwap, { Card } from '../components/CardSwap';
 
 // Animated particle background
 function ParticleBackground() {
@@ -126,7 +125,7 @@ export default function LandingPage() {
           display: 'flex',
           alignItems: 'center',
           background: 'linear-gradient(180deg, #0A1628 0%, #0f2040 100%)',
-          paddingTop: '6rem',
+          paddingTop: '5rem',
           paddingBottom: '8rem',
           overflow: 'hidden',
         }}
@@ -155,20 +154,21 @@ export default function LandingPage() {
         <ParticleBackground />
 
         <div className="container-xl" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div style={{ maxWidth: '720px' }}>
-              {/* Tag */}
-              <div
-                className="section-tag"
-                style={{
-                  opacity: heroVisible ? 1 : 0,
-                  transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
-                  transition: 'all 0.6s ease',
-                }}
-              >
-                <span>🗳️</span>
-                India's #1 Election Education Platform
-              </div>
+          <div style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
+            {/* Tag */}
+            <div
+              className="section-tag"
+              style={{
+                opacity: heroVisible ? 1 : 0,
+                transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s ease',
+                justifyContent: 'center',
+                margin: '0 auto 1rem',
+              }}
+            >
+              <span>🗳️</span>
+              India's #1 Election Education Platform
+            </div>
 
             {/* Heading */}
             <h1
@@ -195,6 +195,7 @@ export default function LandingPage() {
                 lineHeight: 1.7,
                 marginBottom: '2.5rem',
                 maxWidth: '520px',
+                margin: '0 auto 2.5rem',
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'all 0.7s ease 0.2s',
@@ -210,6 +211,7 @@ export default function LandingPage() {
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'all 0.7s ease 0.3s',
+                justifyContent: 'center',
               }}
             >
               <Link to="/guide" className="btn-primary text-base">
@@ -229,6 +231,8 @@ export default function LandingPage() {
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'all 0.7s ease 0.5s',
+                maxWidth: '800px',
+                margin: '4rem auto 0',
               }}
             >
               {stats.map(stat => (
@@ -241,70 +245,6 @@ export default function LandingPage() {
                   </div>
                 </div>
               ))}
-            </div>
-            </div>
-
-            {/* CardSwap Component */}
-            <div 
-              style={{ 
-                height: '600px', 
-                position: 'relative',
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateX(0)' : 'translateX(50px)',
-                transition: 'all 0.8s ease 0.4s',
-              }}
-            >
-              <CardSwap
-                width={380}
-                height={320}
-                cardDistance={50}
-                verticalDistance={60}
-                delay={4000}
-                pauseOnHover={true}
-                skewAmount={4}
-                easing="elastic"
-              >
-                <Card>
-                  <div className="card-icon" style={{ background: 'rgba(79, 70, 229, 0.2)' }}>
-                    🗳️
-                  </div>
-                  <h3>Register to Vote</h3>
-                  <p>
-                    Get your voter ID card and register online through the National Voter Service Portal. 
-                    It's quick, easy, and essential for participating in democracy.
-                  </p>
-                </Card>
-                <Card>
-                  <div className="card-icon" style={{ background: 'rgba(245, 158, 11, 0.2)' }}>
-                    📋
-                  </div>
-                  <h3>Know Your Rights</h3>
-                  <p>
-                    Every citizen has the right to vote freely and fairly. Learn about your voting rights, 
-                    polling procedures, and how to report irregularities.
-                  </p>
-                </Card>
-                <Card>
-                  <div className="card-icon" style={{ background: 'rgba(16, 185, 129, 0.2)' }}>
-                    🎯
-                  </div>
-                  <h3>Make Informed Choices</h3>
-                  <p>
-                    Research candidates, understand their manifestos, and make decisions based on facts. 
-                    Your vote shapes the future of the nation.
-                  </p>
-                </Card>
-                <Card>
-                  <div className="card-icon" style={{ background: 'rgba(139, 92, 246, 0.2)' }}>
-                    ⚡
-                  </div>
-                  <h3>Election Day Ready</h3>
-                  <p>
-                    Know your polling station, carry valid ID, and arrive early. 
-                    Follow the voting process and ensure your vote counts.
-                  </p>
-                </Card>
-              </CardSwap>
             </div>
           </div>
         </div>

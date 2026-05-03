@@ -23,7 +23,16 @@ export default function Navbar() {
 
   useEffect(() => {
     setMobileOpen(false);
-  }, [location]);
+    // Prevent body scroll when mobile menu is open
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [location, mobileOpen]);
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} role="navigation" aria-label="Main navigation">

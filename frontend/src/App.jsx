@@ -1,8 +1,19 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
+
+// Scroll restoration component
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 // Lazy-loaded pages
 const LandingPage = lazy(() => import('./pages/LandingPage'));
@@ -46,6 +57,7 @@ function PageLoader() {
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <a
           href="#main-content"
@@ -69,7 +81,7 @@ export default function App() {
 
         <Navbar />
 
-        <div id="main-content" style={{ flex: 1 }}>
+        <div id="main-content" style={{ flex: 1, minHeight: '100vh' }}>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
@@ -80,7 +92,7 @@ export default function App() {
               <Route path="/check" element={<EligibilityPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="*" element={
-                <div className="container-xl text-center" style={{ padding: '8rem 1.5rem' }}>
+                <div className="container-xl text-center" style={{ paddingTop: '8rem', paddingBottom: '4rem', paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
                   <h1 className="font-display text-4xl font-bold text-white mb-4">404 — Page Not Found</h1>
                   <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>The page you're looking for doesn't exist.</p>
                   <a href="/" className="btn-primary">Go Back Home</a>

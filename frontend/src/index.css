@@ -31,6 +31,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
   color: var(--white);
   overflow-x: hidden;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* ─── Typography ─── */
@@ -183,6 +185,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 16px;
   padding: 1.5rem;
   transition: all 0.3s ease;
+  will-change: transform;
 }
 
 .card:hover {
@@ -291,6 +294,19 @@ h1, h2, h3, h4, h5, h6 {
 .delay-500 { animation-delay: 0.5s; }
 
 /* ─── Page Transitions ─── */
+.page-wrapper {
+  animation: fadeInPage 0.3s ease-out;
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .page-enter {
   opacity: 0;
   transform: translateY(16px);
@@ -335,6 +351,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
   z-index: 1000;
   border: 2px solid rgba(255,255,255,0.15);
+  will-change: transform;
 }
 
 .chat-widget-fab:hover {
@@ -351,6 +368,9 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 900;
   padding: 1rem 0;
   transition: all 0.3s ease;
+  background: rgba(10, 22, 40, 0.8);
+  backdrop-filter: blur(12px);
+  will-change: transform, background;
 }
 
 .navbar.scrolled {
@@ -642,6 +662,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  width: 100%;
 }
 
 /* ─── Utility Classes ─── */
@@ -699,6 +720,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .flex-col {
   flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .grid {
@@ -893,6 +918,20 @@ h1, h2, h3, h4, h5, h6 {
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
